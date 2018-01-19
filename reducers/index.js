@@ -1,9 +1,22 @@
 import { combineReducers } from 'redux';
 
-import { RECEIVE_PRODUCTS } from '../actions';
+import { RECEIVE_PRODUCTS, ADD_TO_CART } from '../actions';
+
+function products(state, action) {
+  switch (action.type) {
+    case ADD_TO_CART:
+      return {
+        ...state,
+        inventory: state.inventory - 1,
+      };
+    default:
+      return state;
+  }
+}
 
 function byId(state = {}, action) {
-  switch (action.type) {
+  const { type, productId } = action;
+  switch (type) {
     case RECEIVE_PRODUCTS:
       return {
         ...state,
@@ -13,6 +26,12 @@ function byId(state = {}, action) {
         }), {}),
       };
     default:
+      if (productId) {
+        return {
+          ...state,
+          [productId]: products(state[productId], action),
+        };
+      }
       return state;
   }
 }
