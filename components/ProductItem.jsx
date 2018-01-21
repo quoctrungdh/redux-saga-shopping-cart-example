@@ -1,16 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Product from './Product';
+
 function ProductItem({
   title, price, inventory, addToCart, id,
 }) {
+  const action = (
+    <button
+      onClick={() => addToCart(id)}
+      disabled={inventory < 1}
+    >
+      {
+        inventory
+        ? 'Add to cart'
+        : 'Sold out'
+      }
+    </button>
+  );
+
   return (
     <li>
-      <h4>{title}</h4>
-      <span>${price}</span><span>({inventory})</span> - &nbsp;
-      <button onClick={() => addToCart(id)}>
-        Add to cart
-      </button>
+      <Product
+        title={title}
+        price={price}
+        action={action}
+      />
     </li>
   );
 }
