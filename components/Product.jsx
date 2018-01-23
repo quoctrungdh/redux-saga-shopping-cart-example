@@ -8,7 +8,10 @@ function Product({
     <div>
       <strong>{title}</strong>
       <span> - {price}</span>
-      <span>{quantity}</span>
+      {
+        quantity &&
+        <span>({quantity})</span>
+      }
       <span>{action}</span>
     </div>
   );

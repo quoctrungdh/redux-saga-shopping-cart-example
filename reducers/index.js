@@ -10,6 +10,12 @@ export function getCartProducts(state) {
   }));
 }
 
+export function getTotal(state) {
+  return getAddedIds(state.cart)
+    .reduce((total, id) =>
+      total + (getProduct(state.products, id).price * getQuantity(state.cart, id)), 0).toFixed(2);
+}
+
 export default combineReducers({
   products,
   cart,
